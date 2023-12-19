@@ -81,7 +81,7 @@ export const CityDetails = ({selectedCity}) => {
 			)}
 			<div>
 				{!!notes && <h3>Notes:</h3>}
-				{notes && isEditing ? (
+				{ isEditing ? (
 					<div>
 						<Textarea value={notes} onChange={handleNotesChange} placeholder='Add notes...' />
 						<div>

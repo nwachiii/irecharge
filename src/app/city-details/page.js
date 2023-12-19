@@ -25,7 +25,7 @@ const MoreDetailsonWeatherPerCity = () => {
 	return (
 		<Stack w='full' bg={'#191919'} color={'#FFFFFF'} minH='100vh' justify={'center'} align='center' mx='auto'>
 			<Link href='/'>
-				<ArrowLeftIcon position="absolute" left="4rem" cursor={'pointer'} boxSize='50px' />
+				<ArrowLeftIcon position="absolute" left="4rem" top="4rem" cursor={'pointer'} boxSize='50px' />
 			</Link>
 			<Box w={{base: '400px', md: '900px'}} p='19px 23px' border='1px solid lightgray' borderRadius={'14px'} minH='200px' h='fit-content'>
 				{isLoading ? (
