@@ -1,17 +1,20 @@
+import Link from 'next/link';
 import {useCity} from '@/context/CityContext';
 import {getLargestCities} from '@/services';
 import {useQuery} from 'react-query';
 import {Text, TableContainer, Table, Button, Thead, Th, Tr, Td, Tbody} from '@chakra-ui/react';
 import {AnimatedLoader} from '../reusable-components/loaders/AnimatedLoader';
 import {CustomToast} from '../reusable-components/toast';
+// import {useRouter} from 'next/router';
 
 export const CityList = () => {
+	// const router = useRouter();
 	const {addToFavorites} = useCity();
 	const {data: cities, isLoading, isError} = useQuery('largestCities', getLargestCities);
 
 	const sortedCities = cities?.sort((a, b) => a.name.localeCompare(b.name));
 
-	console.log('sortedCities', sortedCities);
+	// console.log('sortedCities', sortedCities);
 
 	return (
 		<div>
@@ -52,14 +55,16 @@ export const CityList = () => {
 										</Text>
 									</Td>
 									<Td>
-										<Button bg='transparent' border='1px solid lightgray' color='#FFFFFF' borderRadius={'14px'} onClick={() => addToFavorites(city)}>
+										<Button _hover={{bg:'#333', color:'#FCFCFC'}} bg='transparent' border='1px solid lightgray' color='#FFFFFF' borderRadius={'14px'} onClick={() => addToFavorites(city)}>
 											Add to Favorites
 										</Button>
 									</Td>
 									<Td>
-										<Button w="120px" borderRadius={'12px'} onClick={() => addToFavorites(city)}>
-											View
-										</Button>
+										<Link href={`/city-details/?pageId=${city.geonameId}`}>
+											<Button w='120px' borderRadius={'12px'}>
+												View
+											</Button>
+										</Link>
 									</Td>
 								</Tr>
 							))

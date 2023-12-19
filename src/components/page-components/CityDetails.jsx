@@ -1,7 +1,9 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, Fragment} from 'react';
 import {useQuery} from 'react-query';
 import {useCity} from '@/context/CityContext';
 import {getWeather} from '@/services';
+import {Button, Textarea, HStack, Stack, Text} from '@chakra-ui/react';
+import {AnimatedLoader} from '../reusable-components/loaders/AnimatedLoader';
 
 export const CityDetails = ({selectedCity}) => {
 	const {addToFavorites, removeFromFavorites} = useCity();
@@ -57,39 +59,51 @@ export const CityDetails = ({selectedCity}) => {
 	const {data: weatherData} = useQuery(['weather', selectedCity?.name], () => getWeather(selectedCity?.name));
 
 	return (
-		<div>
-			<h2>City Details</h2>
-			<h3>
-				{selectedCity?.name}, {selectedCity?.countryName}
-				{selectedCity?.isFavorite ? <button onClick={handleRemoveFromFavorites}>Remove from Favorites</button> : <button onClick={handleAddToFavorites}>Add to Favorites</button>}
-			</h3>
+		<Stack position='relative'>
+			<Text fontSize={'32px'} fontWeight={'500'}>
+				City Details
+			</Text>
+			<HStack w='full' justify='space-between'>
+				<Text>
+					{selectedCity?.name}, {selectedCity?.countryName}
+				</Text>
+				<Fragment>{selectedCity?.isFavorite ? <Button onClick={handleRemoveFromFavorites}>Remove from Favorites</Button> : <Button onClick={handleAddToFavorites}>Add to Favorites</Button>}</Fragment>
+			</HStack>
 			{weatherData ? (
 				<div>
 					<p>Temperature: {weatherData?.current?.temperature}°C</p>
 					<p>Weather: {weatherData?.current?.weather_descriptions[0]}</p>
 				</div>
 			) : (
-				<div>Loading weather data...</div>
+				<div>
+					<AnimatedLoader />
+				</div>
 			)}
 			<div>
-				<h3>Notes:</h3>
-				{isEditing ? (
+				{!!notes && <h3>Notes:</h3>}
+				{notes && isEditing ? (
 					<div>
-						<textarea value={notes} onChange={handleNotesChange} placeholder='Add notes...' />
+						<Textarea value={notes} onChange={handleNotesChange} placeholder='Add notes...' />
 						<div>
-							<button onClick={handleSaveNotes}>Save</button>
-							<button onClick={handleCancelEdit}>Cancel</button>
-							<button onClick={handleDeleteNotes}>Delete Notes</button>
+							<Button bg='#191919' color='#FFF' border='1px solid gray.500' onClick={handleSaveNotes}>
+								Save
+							</Button>
+							<Button bg='transparent' color='gray.500' border='1px solid gray.500' onClick={handleCancelEdit}>
+								Cancel
+							</Button>
+							<Button bg='red.500' color='#FFF' border='1px solid red.500' onClick={handleDeleteNotes}>
+								Delete Notes
+							</Button>
 						</div>
 					</div>
 				) : (
 					<div>
 						<p>{notes}</p>
-						<button onClick={handleEditNotes}>Edit Notes</button>
+						<Button onClick={handleEditNotes}>{notes ? 'Edit Notes' : 'Add Notes'}</Button>
 					</div>
 				)}
 			</div>
-		</div>
+		</Stack>
 	);
 };
 

@@ -7,7 +7,7 @@ precacheAndRoute(self.__WB_MANIFEST);
 
 // Cache API responses
 registerRoute(
-	({request}) => request.url.startsWith('https://api.weatherstack.com/'),
+	({request}) => request.url.startsWith('http://api.weatherstack.com/'),
 	new StaleWhileRevalidate({
 		cacheName: 'api-cache',
 	})
