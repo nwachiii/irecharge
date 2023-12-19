@@ -6,7 +6,7 @@ const geonamesUsername = 'nwachiii';
 export async function getLargestCities() {
   try {
     const response = await axios.get(
-      `http://api.geonames.org/searchJSON?username=${geonamesUsername}&featureClass=P&featureCode=PPLA&maxRows=15&orderby=population`
+      `http://secure.geonames.org/searchJSON?username=${geonamesUsername}&featureClass=P&featureCode=PPLA&maxRows=15&orderby=population`
     );
     return response.data.geonames;
   } catch (error) {
