@@ -12,7 +12,7 @@ export const ToastContent = ({title, description, background, ...rest}) => {
 		py: 1,
 	};
 	return (
-		<Box px={5} py={2} w='420px' color='white' h='fit-content' borderRadius='md' bg={background || '#191919'} {...rest}>
+		<Box px={5} py={2} w='420px' color='white' h='fit-content' borderRadius='14px' bg={background || '#191919'} border='1px solid lightgray' {...rest}>
 			{title ? <Text {...toastTextStyles}>{rest.title}</Text> : null}
 			<Text {...toastTextStyles} fontSize={rest.title ? '16px' : '20px'} fontWeight={'normal'} fontFamily={'Euclid Circular B'}>
 				{description}
